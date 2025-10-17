@@ -33,13 +33,9 @@ pub fn calculate_deposit_info(
     let accounts = array_ref![rsps, 0, 4];
     let [amm_account, amm_target_account, amm_pc_vault_account, amm_coin_vault_account] = accounts;
 
-    let amm_state =
-        raydium_amm::state::AmmInfo::load_from_bytes(&amm_account.as_ref().unwrap().data).unwrap();
+    let amm_state = unsafe { &*(&amm_account.as_ref().unwrap().data.as_slice()[0] as *const u8 as *const raydium_amm::state::AmmInfo) };
     let mut amm_state = amm_state.clone();
-    let amm_target_state = raydium_amm::state::TargetOrders::load_from_bytes(
-        &amm_target_account.as_ref().unwrap().data,
-    )
-    .unwrap();
+    let amm_target_state = unsafe { *(&amm_target_account.as_ref().unwrap().data.as_slice()[0] as *const u8 as *const raydium_amm::state::TargetOrders) };
     let amm_pc_vault =
         common_utils::unpack_token(&amm_pc_vault_account.as_ref().unwrap().data).unwrap();
     let amm_coin_vault =
@@ -117,13 +113,9 @@ pub fn calculate_withdraw_info(
     let accounts = array_ref![rsps, 0, 4];
     let [amm_account, amm_target_account, amm_pc_vault_account, amm_coin_vault_account] = accounts;
 
-    let amm_state =
-        raydium_amm::state::AmmInfo::load_from_bytes(&amm_account.as_ref().unwrap().data).unwrap();
+    let amm_state = unsafe { *(&amm_account.as_ref().unwrap().data.as_slice()[0] as *const u8 as *const raydium_amm::state::AmmInfo) };
     let mut amm_state = amm_state.clone();
-    let amm_target_state = raydium_amm::state::TargetOrders::load_from_bytes(
-        &amm_target_account.as_ref().unwrap().data,
-    )
-    .unwrap();
+    let amm_target_state = unsafe { *(&amm_target_account.as_ref().unwrap().data.as_slice()[0] as *const u8 as *const raydium_amm::state::TargetOrders) };
     let amm_pc_vault =
         common_utils::unpack_token(&amm_pc_vault_account.as_ref().unwrap().data).unwrap();
     let amm_coin_vault =
@@ -207,8 +199,7 @@ pub fn calculate_swap_info(
     let [amm_account, amm_pc_vault_account, amm_coin_vault_account, user_input_token_account] =
         accounts;
 
-    let amm_state =
-        raydium_amm::state::AmmInfo::load_from_bytes(&amm_account.as_ref().unwrap().data).unwrap();
+    let amm_state = unsafe { *(&amm_account.as_ref().unwrap().data.as_slice()[0] as *const u8 as *const raydium_amm::state::AmmInfo) };
     let amm_state = amm_state.clone();
     let amm_pc_vault =
         common_utils::unpack_token(&amm_pc_vault_account.as_ref().unwrap().data).unwrap();

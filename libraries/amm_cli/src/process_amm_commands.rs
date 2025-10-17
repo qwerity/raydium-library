@@ -453,7 +453,7 @@ pub fn process_amm_commands(
                 let amm_data = rpc::get_account(&rpc_client, &pool_id.unwrap())
                     .unwrap()
                     .unwrap();
-                let pool_state = raydium_amm::state::AmmInfo::load_from_bytes(&amm_data).unwrap();
+                let pool_state = unsafe { *(&amm_data.as_slice()[0] as *const u8 as *const raydium_amm::state::AmmInfo) };
                 println!("{:#?}", pool_state);
             } else {
                 // fetch pool by filters
@@ -490,7 +490,7 @@ pub fn process_amm_commands(
                     println!("pool_id:{}", pool.0);
                     println!(
                         "{:#?}",
-                        raydium_amm::state::AmmInfo::load_from_bytes(&pool.1.data)
+                        unsafe { *(&pool.1.data.as_slice()[0] as *const u8 as *const raydium_amm::state::AmmInfo) }
                     );
                 }
             }
