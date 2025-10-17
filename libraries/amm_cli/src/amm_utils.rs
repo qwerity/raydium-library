@@ -354,7 +354,7 @@ pub fn load_amm_keys(
     amm_pool: &Pubkey,
 ) -> Result<AmmKeys> {
     let amm_data = rpc::get_account(client, &amm_pool)?.unwrap();
-    let amm = raydium_amm::state::AmmInfo::load_from_bytes(&amm_data).unwrap();
+    let amm = unsafe { *(&amm_data.as_slice()[0] as *const u8 as *const raydium_amm::state::AmmInfo) };
     Ok(AmmKeys {
         amm_pool: *amm_pool,
         amm_target: amm.target_orders,

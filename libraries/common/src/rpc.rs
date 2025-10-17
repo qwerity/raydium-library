@@ -50,7 +50,7 @@ pub fn simulate_transaction(
     cfg: CommitmentConfig,
 ) -> RpcResult<RpcSimulateTransactionResult> {
     let serialized = bincode::serialize(transaction)
-        .map_err(|e| (format!("Serialization failed: {e}")))
+        .map_err(|e| format!("Serialization failed: {e}"))
         .unwrap();
     let serialized_encoded = BASE64_STANDARD.encode(serialized);
     println!("{}", serialized_encoded);
@@ -123,6 +123,7 @@ pub fn get_program_accounts_with_filters(
                     ..RpcAccountInfoConfig::default()
                 },
                 with_context: Some(false),
+                ..RpcProgramAccountsConfig::default()
             },
         )
         .unwrap();
