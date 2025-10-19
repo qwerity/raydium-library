@@ -104,8 +104,7 @@ fn swap_exact_amount(
             .checked_mul(swap_fee_numerator.into())
             .unwrap()
             .checked_ceil_div(swap_fee_denominator.into())
-            .unwrap()
-            .0;
+            .unwrap();
         let swap_in_after_deduct_fee = U128::from(amount_specified).checked_sub(swap_fee).unwrap();
         let swap_amount_out = raydium_amm::math::Calculator::swap_token_amount_base_in(
             swap_in_after_deduct_fee,
@@ -132,7 +131,6 @@ fn swap_exact_amount(
                 .into(),
             )
             .unwrap()
-            .0
             .as_u64();
 
         swap_in_after_add_fee

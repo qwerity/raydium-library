@@ -6,7 +6,6 @@ use crate::{
     amm_types::{AmmDepositInfoResult, AmmKeys, AmmSwapInfoResult, AmmWithdrawInfoResult},
 };
 use common::{common_utils, rpc};
-use raydium_amm::state::Loadable;
 use solana_client::rpc_client::RpcClient;
 use solana_sdk::pubkey::Pubkey;
 

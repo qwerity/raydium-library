@@ -9,8 +9,8 @@ devnet = ["raydium_amm/devnet"]
 [dependencies]
 anchor-client = { workspace = true }
 anchor-lang = { workspace = true }
-serum_dex = { git = "https://github.com/Vai3soh/openbook-dex.git", branch = "feature/update-solana-program-2.1.0", package= "serum_dex", default-features = false, features = ["client","program","no-entrypoint"] }
-raydium_amm = { git = "https://github.com/Vai3soh/raydium-amm.git", branch = "vendor-update-openbook-dex-solana-v2", default-features = false, features = ["client","no-entrypoint"] }
+serum_dex = { git = "https://github.com/qwerity/openbook-dex.git", branch = "solana_2_3_0", package= "serum_dex", default-features = false, features = ["client","program","no-entrypoint"] }
+raydium_amm = { git = "https://github.com/qwerity/raydium-amm.git", branch = "solana_2_3_0", default-features = false, features = ["client","no-entrypoint"] }
 common = { path = "../common" }
 spl-token = { workspace = true, features = ["no-entrypoint"] }
 spl-associated-token-account = { workspace = true, features = ["no-entrypoint"] }
